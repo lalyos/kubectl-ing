@@ -1,0 +1,26 @@
+---
+apiVersion: krew.googlecontainertools.github.com/v1alpha2
+kind: Plugin
+metadata:
+  name: ing
+spec:
+  version: "v0.0.1"
+  homepage: https://github.com/lalyos/kubectl-ing
+  shortDescription: "Generates an Ingress for a svc"
+  description: |
+    There is no imperative way to create an Ingress yaml
+    Here is the fix
+  platforms:
+    - selector:
+        matchExpressions:
+          - key: "os"
+            operator: "In"
+            values:
+              - darwin
+              - linux
+      uri: https://github.com/lalyos/kubectl-ing/archive/v0.0.1.tar.gz
+      sha256: 300c7999003935fe5b07ffce5f4d71ee545e4a8f8f3cbb2ba6a43eb0d1b1339f
+      files:
+        - from: "*"
+          to: "."
+      bin: kubectl-ing-0.0.1/kubectl-ing

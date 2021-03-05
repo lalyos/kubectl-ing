@@ -1,0 +1,30 @@
+#!/bin/bash
+declare service=$1
+
+if ! kubectl get svc $service &> /dev/null ;then
+  echo "===> non existing svs: $service"
+  service=""
+fi
+if ! [[ "$service" ]]; then
+  PS3='Choose svc: '
+  select service in $(kubectl get svc -ojsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'); do
+    echo "===> selected: $service"
+    break
+  done
+fi
+
+port=$(kubectl get svc kuard -o jsonpath='{.spec.ports[0].port}')
+cat  <<EOF
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: $service
+spec:
+  rules:
+    - host: $service.$NS.realworks.fun
+      http:
+        paths:
+        - backend:
+            serviceName: $service
+            servicePort: $port
+EOF
