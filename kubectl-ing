@@ -13,7 +13,7 @@ if ! [[ "$service" ]]; then
   done
 fi
 
-port=$(kubectl get svc kuard -o jsonpath='{.spec.ports[0].port}')
+port=$(kubectl get svc ${service} -o jsonpath='{.spec.ports[0].port}')
 cat  <<EOF
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
