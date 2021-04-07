@@ -8,6 +8,7 @@ git commit -am "version: $ver"
 git tag $ver
 git push origin HEAD --tags
 SHA=$(curl -sL https://github.com/lalyos/kubectl-ing/archive/${ver}.tar.gz | shasum -a 256)
-gsed -i "s/sha256: .*/sha256: $SHA/" plugins/ing.yaml
-
+gsed -i "s/sha256: .*/sha256: ${SHA% *}/" plugins/ing.yaml
+git commit -am "fixing SHA"
+git push origin HEAD
 ```
