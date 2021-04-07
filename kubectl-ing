@@ -21,7 +21,7 @@ metadata:
   name: $service
 spec:
   rules:
-    - host: $service.$NS.${DNS:=speik.com.fun}
+    - host: $service.$NS.${DNS:=speik.fun}
       http:
         paths:
         - backend:
