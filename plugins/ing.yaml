@@ -4,7 +4,7 @@ kind: Plugin
 metadata:
   name: ing
 spec:
-  version: "v0.0.4"
+  version: "v0.0.5"
   homepage: https://github.com/lalyos/kubectl-ing
   shortDescription: "Generates an Ingress for a svc"
   description: |
@@ -18,8 +18,8 @@ spec:
             values:
               - darwin
               - linux
-      uri: https://github.com/lalyos/kubectl-ing/archive/v0.0.4.tar.gz
-      sha256: 5d821c962968fb4f979ab3126fb95b66b6abce2d9d797c768e63ceafe92c5653
+      uri: https://github.com/lalyos/kubectl-ing/archive/v0.0.5.tar.gz
+      sha256: 8b9b4ded2cb075638f65abac74b51680acf6d2078b40f96daa82391a69f0cb63
       files:
         - from: "*"
           to: "."
