@@ -15,16 +15,20 @@ fi
 
 port=$(kubectl get svc ${service} -o jsonpath='{.spec.ports[0].port}')
 cat  <<EOF
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: $service
 spec:
   rules:
-    - host: $service.$NS.${DNS:=k8z.eu}
-      http:
+    - http:
+        host: $service.$NS.${DNS:=k8z.eu}
         paths:
-        - backend:
-            serviceName: $service
-            servicePort: $port
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: $service
+                port:
+                  number: $port
 EOF
