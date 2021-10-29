@@ -12,6 +12,7 @@ if ! [[ "$service" ]]; then
     break
   done
 fi
+namspace=$(kubectl config view --minify -ojsonpath='{.contexts[0].context.namespace}')
 
 port=$(kubectl get svc ${service} -o jsonpath='{.spec.ports[0].port}')
 cat  <<EOF
@@ -22,7 +23,7 @@ metadata:
 spec:
   rules:
     - http:
-        host: $service.$NS.${DNS:=k8z.eu}
+        host: ${service}.${namspace}.${DNS:=k8z.eu}
         paths:
           - path: /
             pathType: ImplementationSpecific
