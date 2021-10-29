@@ -19,7 +19,7 @@ spec:
               - darwin
               - linux
       uri: https://github.com/lalyos/kubectl-ing/archive/v0.0.7.tar.gz
-      sha256: a984839d04e2adf3135b6e22f6cd97525236dc0f971ff14f4200e20b11f8a02c
+      sha256: a89a812836af2a797bf67702bc685cfe8908497c0b1d56df25397a41589fac00
       files:
         - from: "*"
           to: "."
