@@ -31,8 +31,8 @@ metadata:
   name: $service
 spec:
   rules:
-    - http:
-        host: ${service}.${namspace}.${DNS:=k8z.eu}
+  -   host: ${service}.${namspace}.${DNS:=k8z.eu}
+      http:
         paths:
           - path: /
             pathType: ImplementationSpecific
