@@ -1,16 +1,25 @@
 #!/bin/bash
 declare service=$1
 
+info() {
+  echo "===> $*" >&2
+}
+
 if ! kubectl get svc $service &> /dev/null ;then
-  echo "===> non existing svs: $service"
+  info "non existing svs: $service"
   service=""
 fi
-if ! [[ "$service" ]]; then
-  PS3='Choose svc: '
-  select service in $(kubectl get svc -ojsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'); do
-    echo "===> selected: $service"
-    break
-  done
+if ! [[ "${service}" ]]; then
+  if [[ 1 -eq $(kubectl get svc -o go-template="{{len .items}}") ]]; then
+   service=$(kubectl get svc -o jsonpath='{.items[0].metadata.name}')
+   info "single service: ${service}"
+  else
+    PS3='Choose svc: '
+    select service in $(kubectl get svc -ojsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'); do
+      info "selected: ${service}"
+      break
+    done
+  fi
 fi
 namspace=$(kubectl config view --minify -ojsonpath='{.contexts[0].context.namespace}')
 
@@ -29,7 +38,7 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: $service
+                name: ${service}
                 port:
-                  number: $port
+                  number: ${port}
 EOF
